@@ -33,3 +33,7 @@ void Izpis_Stevil(int* polje, unsigned int velikost) {
 
     output << endl;
 }
+
+int getBit(unsigned char num, int k) {
+    return (num >> k) & 1;
+}

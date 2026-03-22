@@ -58,3 +58,38 @@ void countingSortByBit(vector<unsigned char>& A, int k) {
 
     A = output;
 }
+
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        cerr << "Uporaba: " << argv[0] << " <vhodna_datoteka>" << endl;
+        return 1;
+    }
+
+    vector<int> vnos;
+    if (!Branje_Stevil(vnos, argv[1])) {
+        cerr << "Napaka pri branju datoteke." << endl;
+        return 1;
+    }
+
+    vector<unsigned char> stevila;
+    for (int val : vnos) {
+        if (val < 0 || val > 255) {
+            cerr << "Napaka: število izven razpona [0, 255]: " << val << endl;
+            return 1;
+        }
+        stevila.push_back(static_cast<unsigned char>(val));
+    }
+
+    for (int k = 0; k < 8; k++) {
+        countingSortByBit(stevila, k);
+    }
+
+    vector<int> izhod;
+    for (unsigned char val : stevila) {
+        izhod.push_back(static_cast<int>(val));
+    }
+
+    Izpis_Stevil(izhod.data(), izhod.size());
+
+    return 0;
+}

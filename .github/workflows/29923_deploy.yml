@@ -1,0 +1,34 @@
+name: CD Dostava na DockerHub
+
+# Ta skripta se zažene ko se zaključi workflow CI Testiranje Radix Sor"
+on:
+  workflow_run:
+    workflows: ["CI Testiranje Radix Sort"]
+    types:
+      - completed
+
+jobs:
+  build_and_push:
+    # Pogoj: Zažene samo če je bil prejšnji workflow (testiranje) uspešen
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted
+    
+    steps:
+      - name: Pridobivanje kode
+        uses: actions/checkout@v4
+
+      # Prijava v DockerHub z uporabo Secretov
+      - name: Prijava v DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Gradnja Docker slike in pošiljanje v DockerHub repozitorij
+      - name: Build in Push Docker slike
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Slika se bo imenovala po mojem uporabniškem imenu / vaja-radix-sort
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/vaja-radix-sort:latest

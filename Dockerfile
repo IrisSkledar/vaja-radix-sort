@@ -1,3 +1,4 @@
+
 # Uporabi uradno GCC podobo za prevajanje C++ kode
 FROM gcc:latest
 

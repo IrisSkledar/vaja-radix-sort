@@ -25,3 +25,4 @@ else
     echo "TEST NEUSPEŠEN: Izhodna datoteka out.txt ne obstaja!"
     exit 1
 fi
+

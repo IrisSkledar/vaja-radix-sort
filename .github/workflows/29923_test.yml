@@ -48,7 +48,7 @@ jobs:
           name: statusni-artefakt
 
       # ZAHTEVA: Preverjanje vsebine datoteke napaka.txt
-       - name: Preveri vsebino napake in izvedi teste
+      - name: Preveri vsebino napake in izvedi teste
         run: |
           echo "Preverjam okolje: ${{ matrix.okolje }}"
           if grep -q "ls:" napaka.txt; then

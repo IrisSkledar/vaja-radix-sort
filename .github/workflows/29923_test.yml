@@ -48,7 +48,7 @@ jobs:
           name: statusni-artefakt
 
       # ZAHTEVA: Preverjanje vsebine datoteke napaka.txt
-      - name: Preveri vsebino napake in izvedi teste
+       - name: Preveri vsebino napake in izvedi teste
         run: |
           echo "Preverjam okolje: ${{ matrix.okolje }}"
           if grep -q "ls:" napaka.txt; then
@@ -56,7 +56,11 @@ jobs:
             exit 1
           else
             echo "Vse je v redu. Zaganjam teste v okolju ${{ matrix.okolje }}..."
-            # Tukaj zaženemo tvojo testno skripto
+            
+            # TA DEL JE KLJUČEN: Odstrani Windows končaje vrstic neposredno na runnerju
+            sed -i 's/\r$//' ./testi/run_tests.sh
+            
+            # Nastavimo pravice in zaženemo
             chmod +x ./testi/run_tests.sh
             ./testi/run_tests.sh
           fi
